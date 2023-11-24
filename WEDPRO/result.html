@@ -1,39 +1,88 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>운동 어플</title>
+  <style>
+    .hide {
+      display: none;
+    }
+
+    .show {
+      display: block;
+    }
+  </style>
 </head>
+
 <body>
   <form>
     <fieldset>
       <legend>정보 입력</legend>
+
       <ul id="Information">
-        <li>
-          <label for="user-id">닉네임 </label>
-          <input type="text" id="user-id" autofocus required>
-        </li>
-        <li>
-          <label for="age">나이  </label> 
-          <input type="text" id="age" required>
-        </li>
-        <li>
-          <legend>성별</legend>
-          <input type = "radio" name = "sex" id = "sex_f" value = "sex_female">
-          <label for = "sex_f">여자</label> 
-          <input type = "radio" name = "sex" id = "sex_m" value = "sex_male">
-          <label for = "sex_m">남자</label> 
-        </li>        
-        <li>
-          <label for="location">위치</label>
-          
-        </li>   
-      </ul>  
+        <div id="step1">
+          <li>
+            <label for="user-id">닉네임 </label>
+            <input type="text" id="user-id" autofocus required>
+          </li>
+          <li>
+            <label for="age">나이 </label>
+            <input type="text" id="age" required>
+          </li>
+          <li>
+            <legend>성별</legend>
+            <input type="radio" name="gender" id="gender_f" value="gender_female">
+            <label for="gender_f">여자</label>
+            <input type="radio" name="gender" id="gender_m" value="gender_male">
+            <label for="gender_m">남자</label>
+          </li>
+          <li>
+            <label for="location">위치</label>
+          </li>
+        </div>
+        <div id="step2" class="hide">
+          <li>
+            <label for="goal">goal </label>
+            <input type="text" id="goal" required>
+          </li>
+        </div>
+      </ul>
+
     </fieldset>
     <div id="buttons">
-      <input type="submit" value="입력"> 
-    </div>        
+      <input type="button" value="next step" onclick="onClickNextStep()">
+    </div>
   </form>
+
+  <script>
+    let currentStep = 1;
+    const onClickNextStep = () => {
+      if (currentStep == 1) {
+        document.getElementById('step' + currentStep).classList.add('hide');
+
+        document.getElementById('step' + (currentStep + 1)).classList.add('show');
+        document.getElementById('step' + (currentStep + 1)).classList.remove('hide');
+        currentStep++;
+      } else {
+        const goal = document.getElementById('goal').value;
+        let test;
+        switch (goal) {
+          case 'diet': {
+            test = '1111';
+            break;
+          }
+          case 'bulkup': {
+            test = '2222';
+            break;
+          }
+        }
+        alert(test);
+      }
+    }
+
+  </script>
 </body>
+
 </html>
