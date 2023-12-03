@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운동 어플</title>
+  <style>
+    .hide {
+      display: none;
+    }
+
+    .show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="Information">
+    <fieldset>
+      <legend>정보 입력</legend>
+
+      <ul>
+        <div id="step1">
+          <li>
+            <label for="user-id">닉네임 </label>
+            <input type="text" id="user-id" autofocus required>
+          </li>
+          <li>
+            <label for="age">나이 </label>
+            <input type="text" id="age" required>
+          </li>
+          <li>
+            <legend>성별</legend>
+            <input type="radio" name="gender" id="gender_f" value="gender_female">
+            <label for="gender_f">여자</label>
+            <input type="radio" name="gender" id="gender_m" value="gender_male">
+            <label for="gender_m">남자</label>
+          </li>
+          <li>
+            <label for="location">위치</label>
+          </li>
+        </div>
+        <div id="step2" class="hide">
+          <li>
+            <label for="goal">목표 </label>
+            <input type="text" id="goal" required>
+          </li>
+          <button id="startButton" class="hide" onclick="exerciseButton()">운동 시작하기</button>
+        </div>
+        <div id="buttons">
+          <input type="button" value="입력" onclick="onClickNextStep()">
+        </div>
+    </fieldset>
+
+  </div>
+  <div id="mainContainer" class="hide">
+    <span id="currentUserId"></span> : <span id="point"></span>
+    <input type="button" value="출석체크" onclick="onClickDaliyCheck()">
+    <input type="button" value="운동 시작" onclick="exerciseButton()">
+  </div>
+  <input type="button" value="home" onclick="onClickHome()">
+
+  <script>
+    let users = [];
+    let currentStep = 1;
+    let currentUser;
+
+    const onClickDaliyCheck = () => {
+      if (!currentUser.lastCheck) { // last check is null -> check update date now
+        currentUser.point++;
+        document.getElementById('point').innerHTML = currentUser.point;
+      } // else if user last check date is not today -> point no update
+    }
+
+    const onClickHome = () => { // first display show
+      document.getElementById('Information').classList.add('show');
+      document.getElementById('Information').classList.remove('hide');
+
+      document.getElementById('step1').classList.add('show');
+      document.getElementById('step1').classList.remove('hide');
+      document.getElementById('step2').classList.add('hide');
+      document.getElementById('step2').classList.remove('show');
+
+      document.getElementById('mainContainer').classList.add('hide');
+      document.getElementById('mainContainer').classList.remove('show');
+      currentStep = 1;
+      currentUser = null;
+    };
+
+    const onClickNextStep = () => {
+      if (currentStep == 1) {
+        document.getElementById('step' + currentStep).classList.add('hide');
+
+        document.getElementById('step' + (currentStep + 1)).classList.add('show');
+        document.getElementById('step' + (currentStep + 1)).classList.remove('hide');
+        currentStep++;
+
+      } else {
+        const goal = document.getElementById('goal').value;
+        let test;
+        switch (goal) {
+          case '다이어트': {
+            test = '1111';
+            break;
+          }
+          case '체력증진': {
+            test = '2222';
+            break;
+          }
+        }
+        alert(test);
+        document.getElementById('Information').classList.add('hide');
+        document.getElementById('mainContainer').classList.add('show');
+        const userId = document.getElementById('user-id').value;
+
+        if (users.findIndex((item, idx) => { return x => x.userId === userId }) === -1) { // user not found
+          let user = { 'userId': userId, 'point': 0, 'lastCheck': null }; // user add for array
+          currentUser = user;
+          users.push(user);
+          document.getElementById('currentUserId').innerHTML = currentUser.userId;
+          document.getElementById('point').innerHTML = currentUser.point;
+        } else{ // user found
+          // found user - > set currentUser
+        }
+        console.log(users);
+      }
+    }
+
+    const showExerciseButton = () => {
+      const startButton = document.getElementById('startButton');
+      startButton.classList.remove('hide');
+      startButton.classList.add('show');
+    }
+
+    const exerciseButton = () => {
+      let comfirmflag = comfirm("운동을 시작하시겠습니까?");
+      document.getElementById('result').innerText = comfirm;
+    }
+
+  </script>
+</body>
+
+</html>
