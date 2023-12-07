@@ -13,6 +13,85 @@
     .show {
       display: block;
     }
+
+    img {
+      width: 900px;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    fieldset {
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #fff;
+    }
+
+    legend {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 200px;
+      padding: 5px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+   /* #mainContainer {
+      text-align: center;
+    }*/
+
+   /* #exerciseVideo {
+      display: none;
+      text-align: center;
+    }*/
+
+    #exerciseVideo img {
+      width: 50%;
+      height: 80;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 
@@ -59,9 +138,24 @@
   <div id="mainContainer" class="hide">
     <span id="currentUserId"></span> : <span id="point"></span>
     <input type="button" value="출석체크" onclick="onClickDaliyCheck()">
-    <input type="button" value="운동 시작" onclick="exerciseButton()">
+    <input type="button" value="운동시작" onclick="exerciseButton()">
   </div>
   <input type="button" value="home" onclick="onClickHome()">
+
+  <div id="exerciseVideo" class="hide">
+    <legend>다이어트 운동 영상</legend>
+    <ul>
+      <div id="step3">
+        <p><a href="../WEDPRO/warm_UpCycle.html" target="_blank"><img src="./warm_UpCycle.jpg" alt="다이어트운동1" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/ChestPressMachine.html" target="_blank"><img src="./ChestPressMachine.jpg" alt="다이어트운동2" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/Peckdeckfly.html" target="_blank"> <img src="./Peckdeckfly.jpg" alt="다이어트운동3" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/shoulderPressMachine.html" target="_blank"> <img src="./shoulderPressMachine.jpg" alt="다이어트운동4" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/DumbelleTralize.html" target="_blank"><img src="./DumbelleTralize.jpg" alt="다이어트운동5" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/wonamDumbelKickback.html" target="_blank"> <img src="./wonamDumbelKickback.jpg" alt="다이어트운동6" width="100%" height="10%"></p></a>
+       <p><a href="../WEDPRO/trainingMachine.html" target="_blank">  <img src="./trainingMachine.jpg" alt="다이어트운동7" width="100%" height="10%"></p></a>
+      </div>
+    </ul>
+  </div>
 
   <script>
     let users = [];
@@ -81,42 +175,41 @@
 
       document.getElementById('step1').classList.add('show');
       document.getElementById('step1').classList.remove('hide');
+
       document.getElementById('step2').classList.add('hide');
       document.getElementById('step2').classList.remove('show');
 
       document.getElementById('mainContainer').classList.add('hide');
       document.getElementById('mainContainer').classList.remove('show');
+
       currentStep = 1;
       currentUser = null;
     };
 
     const onClickNextStep = () => {
-      if (currentStep == 1) {
-        document.getElementById('step' + currentStep).classList.add('hide');
 
-        document.getElementById('step' + (currentStep + 1)).classList.add('show');
-        document.getElementById('step' + (currentStep + 1)).classList.remove('hide');
+      const currentStepDiv = document.getElementById(`step${currentStep}`);
+      currentStepDiv.classList.add('hide');
+
+        if (currentStep === 1) {
+       const ageInput = document.getElementById('age');
+       const age = parseInt(ageInput.value);
+
+       if(age >= 19 && age <=35) {
+        currentStepDiv.nextElementSibling.classList.remove('hide');
         currentStep++;
-
+       } else {
+        alert('나이는 19세에서 35세 사이어야 합니다.');
+       }
       } else {
         const goal = document.getElementById('goal').value;
-        let test;
-        switch (goal) {
-          case '다이어트': {
-            test = '1111';
-            break;
-          }
-          case '체력증진': {
-            test = '2222';
-            break;
-          }
-        }
-        alert(test);
+        alert(goal === '다이어트' ? '1111' : goal === '체력증진' ? '2222' : '');
+
         document.getElementById('Information').classList.add('hide');
         document.getElementById('mainContainer').classList.add('show');
         const userId = document.getElementById('user-id').value;
 
-        if (users.findIndex((item, idx) => { return x => x.userId === userId }) === -1) { // user not found
+       if (users.findIndex((item, idx) => { return x => x.userId === userId }) === -1) { // user not found
           let user = { 'userId': userId, 'point': 0, 'lastCheck': null }; // user add for array
           currentUser = user;
           users.push(user);
@@ -126,6 +219,21 @@
           // found user - > set currentUser
         }
         console.log(users);
+
+       /* const userIndex = users.findIndex((item) => item.userId === userId);
+
+        if (userIndex === -1) {
+          currentUser = { 'userId': userId, 'point': 0, 'lastCheck': null };
+          users.push(currentUser);
+        } else {
+          currentUser = users[userIndex];
+        }
+
+        document.getElementById('currentUserId').innerHTML = currentUser.userId;
+        document.getElementById('point').innerHTML = currentUser.point;
+
+        console.log(users);*/
+
       }
     }
 
@@ -133,12 +241,26 @@
       const startButton = document.getElementById('startButton');
       startButton.classList.remove('hide');
       startButton.classList.add('show');
-    }
+    };
 
     const exerciseButton = () => {
-      let comfirmflag = comfirm("운동을 시작하시겠습니까?");
-      document.getElementById('result').innerText = comfirm;
+     let userConfirm = confirm("운동을 시작하시겠습니까?");
+  
+    if(userConfirm) {
+      document.getElementById('Information').classList.add('hide');
+      document.getElementById('mainContainer').classList.add('show');
+      document.getElementById('exerciseVideo').classList.add('show');
+    } else {
+      alert("운동을 시작하지 않습니다.");
+      document.getElementById('exerciseVideo').classList.remove('show');
+      document.getElementById('exerciseVideo').classList.add('hide');
+
+
     }
+    
+    };
+
+
 
   </script>
 </body>
