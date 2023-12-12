@@ -40,7 +40,7 @@
     const shuffle = [];
     for (let i = candidate.length; i > 0; i--) {
       const random = Math.floor(Math.random() * i);
-      const spliceArray = candidate.splice(random,1);
+      const spliceArray = candidate.splice(random , 1);
       const value = spliceArray[0];
       shuffle.push(value);
     }
@@ -51,10 +51,15 @@
     console.log(winExercise , bonusExercise);
 
     const $result = document.querySelector('#result');
+    const $bonus = document.querySelector('#bonus');
+    
     function drawExercise(number, $parent, delay) {
-      setTimeout(() => {
+
+      const $ball = document.createElement('div');
       $ball.className = 'ball';
       $ball.textContent = exercise;
+
+      setTimeout(() => {
       $parent.appendChild($ball);
     }, delay);
   }
@@ -65,9 +70,8 @@
       }, 1000 * (i + 1));
     }
 
-    const $bonus = document.querySelector('#bonus');
     setTimeout(() => {
-      drawExercise(bonusExercise[0], $bonus);
+      drawExercise(bonusExercise[0], $bonus, 7000);
     }, 7000);
 
 
