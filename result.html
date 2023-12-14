@@ -78,20 +78,153 @@
       background-color: #45a049;
     }
 
-   /* #mainContainer {
-      text-align: center;
-    }*/
-
-   /* #exerciseVideo {
-      display: none;
-      text-align: center;
-    }*/
-
     #exerciseVideo img {
       width: 50%;
       height: 80;
       margin-bottom: 10px;
     }
+
+    body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 5px;
+            height: 55px;
+            line-height: 55px;
+            /* 텍스트를 수직으로 가운데 정렬 */
+        }
+
+        h1 {
+            margin: 0;
+            /* 텍스트 주위의 여백을 제거 */
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            /* 메인을 플렉스로 설정 */
+            /* 세로 중앙 정렬 */
+            flex-direction: column;
+
+        }
+
+        section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-right: 20px;
+            /* 메인 오른쪽 여백 추가 */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label,
+        input,
+        select {
+            margin-bottom: 10px;
+            /* 각 입력 요소 사이에 간격 추가 */
+        }
+
+        .modal-btn {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .centered-btn {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            /* 다른 요소 위에 나타나도록 설정 */
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30px;
+            line-height: 30px;
+            /* 텍스트를 수직으로 가운데 정렬 */
+        }
+
+        footer nav {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        footer nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer nav ul li {
+            text-align: center;
+        }
+
+        footer nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        footer nav ul li a:hover {
+            background-color: #555;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .cell {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
   </style>
 </head>
 
@@ -142,25 +275,13 @@
   </div>
   <input type="button" value="home" onclick="onClickHome()">
 
-  <div id="exerciseVideo" class="hide">
-    <legend>다이어트 운동 영상</legend>
-    <ul>
-      <div id="step3">
-        <p><a href="../WEDPRO/warm_UpCycle.html" target="_blank"><img src="./warm_UpCycle.jpg" alt="다이어트운동1" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/ChestPressMachine.html" target="_blank"><img src="./ChestPressMachine.jpg" alt="다이어트운동2" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/Peckdeckfly.html" target="_blank"> <img src="./Peckdeckfly.jpg" alt="다이어트운동3" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/shoulderPressMachine.html" target="_blank"> <img src="./shoulderPressMachine.jpg" alt="다이어트운동4" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/DumbelleTralize.html" target="_blank"><img src="./DumbelleTralize.jpg" alt="다이어트운동5" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/wonamDumbelKickback.html" target="_blank"> <img src="./wonamDumbelKickback.jpg" alt="다이어트운동6" width="100%" height="10%"></p></a>
-       <p><a href="../WEDPRO/trainingMachine.html" target="_blank">  <img src="./trainingMachine.jpg" alt="다이어트운동7" width="100%" height="10%"></p></a>
-      </div>
-    </ul>
-  </div>
-
+  
+  
   <script>
     let users = [];
     let currentStep = 1;
     let currentUser;
+    
 
     const onClickDaliyCheck = () => {
       if (!currentUser.lastCheck) { // last check is null -> check update date now
@@ -191,48 +312,42 @@
       const currentStepDiv = document.getElementById(`step${currentStep}`);
       currentStepDiv.classList.add('hide');
 
-        if (currentStep === 1) {
-       const ageInput = document.getElementById('age');
-       const age = parseInt(ageInput.value);
+      if (currentStep === 1) {
+        const ageInput = document.getElementById('age');
+        const age = parseInt(ageInput.value);
 
-       if(age >= 19 && age <=35) {
-        currentStepDiv.nextElementSibling.classList.remove('hide');
-        currentStep++;
-       } else {
-        alert('나이는 19세에서 35세 사이어야 합니다.');
-       }
+        if (age >= 19 && age <= 35) {
+          currentStepDiv.nextElementSibling.classList.remove('hide');
+          currentStep++;
+        } else {
+          alert('나이는 19세에서 35세 사이어야 합니다.');
+        }
       } else {
         const goal = document.getElementById('goal').value;
-        alert(goal === '다이어트' ? '1111' : goal === '체력증진' ? '2222' : '');
-
+        switch (goal) {
+          case '다이어트':
+            window.location.href = 'dietLotto.html';
+            break;
+          case '체력증진':
+            window.location.href = 'exerciseLotto.html';
+            break;
+          default:
+             break;
+        }
         document.getElementById('Information').classList.add('hide');
         document.getElementById('mainContainer').classList.add('show');
         const userId = document.getElementById('user-id').value;
 
-       if (users.findIndex((item, idx) => { return x => x.userId === userId }) === -1) { // user not found
+        if (users.findIndex((item, idx) => { return x => x.userId === userId }) === -1) { // user not found
           let user = { 'userId': userId, 'point': 0, 'lastCheck': null }; // user add for array
-          currentUser = user;
+          currentUser = user; 
           users.push(user);
           document.getElementById('currentUserId').innerHTML = currentUser.userId;
           document.getElementById('point').innerHTML = currentUser.point;
-        } else{ // user found
+        } else { // user found
           // found user - > set currentUser
         }
         console.log(users);
-
-       /* const userIndex = users.findIndex((item) => item.userId === userId);
-
-        if (userIndex === -1) {
-          currentUser = { 'userId': userId, 'point': 0, 'lastCheck': null };
-          users.push(currentUser);
-        } else {
-          currentUser = users[userIndex];
-        }
-
-        document.getElementById('currentUserId').innerHTML = currentUser.userId;
-        document.getElementById('point').innerHTML = currentUser.point;
-
-        console.log(users);*/
 
       }
     }
@@ -244,25 +359,22 @@
     };
 
     const exerciseButton = () => {
-     let userConfirm = confirm("운동을 시작하시겠습니까?");
-  
-    if(userConfirm) {
-      document.getElementById('Information').classList.add('hide');
-      document.getElementById('mainContainer').classList.add('show');
-      document.getElementById('exerciseVideo').classList.add('show');
-    } else {
-      alert("운동을 시작하지 않습니다.");
-      document.getElementById('exerciseVideo').classList.remove('show');
-      document.getElementById('exerciseVideo').classList.add('hide');
+      let userConfirm = confirm("운동을 시작하시겠습니까?");
+
+      if (userConfirm) {
+        document.getElementById('Information').classList.add('hide');
+        document.getElementById('mainContainer').classList.add('show');
+        document.getElementById('exerciseVideo').classList.add('show');
+      } else {
+        alert("운동을 시작하지 않습니다.");
+        document.getElementById('exerciseVideo').classList.remove('show');
+        document.getElementById('exerciseVideo').classList.add('hide');
 
 
-    }
-    
+      }
+
     };
-
-
 
   </script>
 </body>
-
 </html>
