@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운동 로또</title>
+  <style>
+
+  .exercise-container {
+      display: flex;
+      flex-direction: column;
+      align-items: right;
+      margin-bottom: 20px;
+    }
+
+    .ball {
+      display: inline-block;
+      border: 2px solid #333;
+      border-radius: 50%;
+      width: 120px;
+      height: 100px;
+      line-height: 100px;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 10px;
+      background-color: #f0f0f0;
+      font-weight: bold;
+      margin-left: 200px;
+
+    }
+
+    #result, #bonus {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .exercise-image {
+      max-width: 200px;
+      max-height: 200px;
+      margin-top: 10px;
+      margin-left: 200px;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="exercise-container" id="result">오늘의 운동 : </div>
+  <div class="exercise-container" id="bonus">보너스 운동 : </div>
+
+  
+  <script>
+
+    const exercise = [
+      { name: '어깨 운동', image: "./Shoulder_1.jpg", videoId: "jYfzJgTOLQIR6Sar" },
+      { name: '이두 운동', image: "./Biceps_2.jpg", videoId: "cgbcbt0aL6_prHtI" },
+      { name: '삼두 운동', image: "./tricuspid_3.jpg", videoId: "YVtxwu-Oii6UwGs9" },
+      { name: '복근 운동', image: "./Abs_4.jpg", videoId: "DFkdAnjmUecz61LG" },
+      { name: '엉덩이 운동', image: "./Hip_5.jpg", videoId: "w5Nbzk7GRe-44UQ2" },
+      { name: '허벅지 운동', image: "./thigh_6.jpg", videoId: "f_7n0-vQmNU7hdk" },
+      { name: '유산소', image: "./cardio_7.jpg" },
+      { name: '가슴 운동', image: "./Chest_8.jpg", videoId: "lWOLh0FipHsSWAPX" },
+      { name: '등 운동', image: "./back_9.jpg", videoId: "rRMKOyMtn8ZwiG8J" },
+      { name: '코어 운동', image: "./Core_10.jpg", videoId: "pv59RBajbthahyEq" }
+    ];
+
+    /*const onClickImage = (type) => {
+      document.getElementById('movie' + type).style.display = 'block';
+      //document.getElementById(`movie${type}`).style.display = 'block';
+
+    };*/
+
+    const onClickImage = (type) => {
+      document.getElementById('movie' + type).style.display = 'block';
+    }
+
+    const shuffle = exercise.sort(() => Math.random() - 0.5);
+   
+
+    const winExercise = shuffle.slice(0,3);
+    const bonusExercise = shuffle.slice(3,4);
+
+    //console.log(winExercise , bonusExercise);
+
+    const $result = document.querySelector('#result');
+    
+    const drawExercise = (exercise, $parent) => {
+      const $ball = document.createElement('div');
+      $ball.textContent = exercise.name;
+      $ball.className = 'ball';
+
+      const $image = document.createElement('img');
+      $image.alt = exercise.name;
+      $image.src = exercise.image;
+      $image.className = 'exercise-image';
+
+      $image.addEventListener('click', () => {
+      showVideo(exercise.videoUrl);
+
+      });
+      $parent.appendChild($ball);
+      $parent.appendChild($image);
+    }
+
+
+    const showVideo = (videoId) => {
+      const $videoContainer = document.createElement('div');
+      $videoContainer.className = 'video-container';
+
+      const $iframe = document.createElement('iframe');
+      $iframe.allowFullscreen = true;
+      $iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+
+      $videoContainer.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
+      
+      $videoContainer.appendChild($iframe);
+
+      document.body.appendChild($videoContainer);
+      document.body.addEventListener('click', () => {
+        $videoContainer.remove();
+      });
+
+    }
+
+    for (let i = 0; i < winExercise.length; i++) {
+      setTimeout(() => {
+        drawExercise(winExercise[i], $result);
+      }, 1000 * (i + 1));
+    }
+
+    const $bonus = document.querySelector('#bonus');
+    setTimeout(() => {
+      drawExercise(bonusExercise[0], $bonus);
+    }, 7000);
+
+
+
+  
+  </script>
+  
+</body>
+</html>
