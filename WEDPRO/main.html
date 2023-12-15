@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 어플</title>
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        img {
+            width: 900px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        fieldset {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<div id="Information" class="show">
+    <fieldset>
+        <legend>정보 입력</legend>
+
+        <ul>
+            <div id="step1" class="show">
+                <li>
+                    <label for="user-id">닉네임 </label>
+                    <input type="text" id="user-id" autofocus required>
+                </li>
+                <li>
+                    <label for="age">나이 </label>
+                    <input type="text" id="age" required>
+                </li>
+                <li>
+                    <legend>성별</legend>
+                    <input type="radio" name="gender" id="gender_f" value="gender_female">
+                    <label for="gender_f">여자</label>
+                    <input type="radio" name="gender" id="gender_m" value="gender_male">
+                    <label for="gender_m">남자</label>
+                </li>
+                <li>
+                    <label for="location">위치</label>
+                    <input type="button" value="위치" onclick="includeHTML('location', 'location.html')">
+                    <div id="location"></div>
+
+                </li>
+            </div>
+            <div id="step2" class="hide">
+                <li>
+                    <label for="goal">목표 </label>
+                    <input type="text" id="goal" required>
+                </li>
+                <button id="startButton" class="hide" onclick="exerciseButton()">운동 시작하기</button>
+            </div>
+            <div id="buttons">
+                <input type="button" value="입력" onclick="onClickNextStep()">
+            </div>
+        </ul>
+    </fieldset>
+
+</div>
+<div id="mainContainer" class="hide">
+    <div>
+        <span id="currentUserId"></span> : <span id="point"></span>
+    </div>
+
+    <input type="button" value="출석체크" onclick="onClickDaliyCheck()">
+    <input type="button" value="운동시작" onclick="exerciseButton()">
+    <input type="button" value="식단" onclick="includeHTML('content', 'gichan1.html')">
+    <input type="button" value="운동게임 시작" onclick="includeHTML('game', 'workoutGame.html')">
+
+    
+    <div id="content"></div>
+    <div id="game"></div>
+
+</div>
+<input type="button" value="home" onclick="onClickHome()">
+
+
+<script>
+    let users = [];
+    let currentStep = 1;
+    let currentUser;
+
+
+    const onClickDaliyCheck = () => {
+        if (!currentUser.lastCheck) { // last check is null -> check update date now
+            currentUser.point++;
+            document.getElementById('point').innerHTML = currentUser.point;
+        } // else if user last check date is not today -> point no update
+    }
+
+    const onClickHome = () => { // first display show
+        document.getElementById('Information').classList.add('show');
+        document.getElementById('Information').classList.remove('hide');
+
+        document.getElementById('step1').classList.add('show');
+        document.getElementById('step1').classList.remove('hide');
+
+        document.getElementById('step2').classList.add('hide');
+        document.getElementById('step2').classList.remove('show');
+
+        document.getElementById('mainContainer').classList.add('hide');
+        document.getElementById('mainContainer').classList.remove('show');
+
+        currentStep = 1;
+        currentUser = null;
+    };
+
+    const onClickNextStep = () => {
+
+        const currentStepDiv = document.getElementById(`step${currentStep}`);
+        currentStepDiv.classList.add('hide');
+        currentStepDiv.classList.remove('show');
+
+
+        if (currentStep === 1) {
+            const ageInput = document.getElementById('age');
+            const age = parseInt(ageInput.value);
+
+            if (age >= 19 && age <= 35) {
+                currentStepDiv.nextElementSibling.classList.remove('hide');
+                currentStep++;
+            } else {
+                alert('나이는 19세에서 35세 사이어야 합니다.');
+            }
+        } else {
+            const goal = document.getElementById('goal').value;
+            switch (goal) {
+                case '다이어트':
+                    includeHTML('content', 'dietLotto.html');
+                    break;
+                case '체력증진':
+                    includeHTML('content', 'exerciseLotto.html');
+                    break;
+                default:
+                    break;
+            }
+            document.getElementById('Information').classList.remove('show');
+            document.getElementById('Information').classList.add('hide');
+            document.getElementById('mainContainer').classList.add('show');
+            const userId = document.getElementById('user-id').value;
+
+            if (users.findIndex((item, idx) => {
+                return x => x.userId === userId
+            }) === -1) { // user not found
+                let user = {'userId': userId, 'point': 0, 'lastCheck': null}; // user add for array
+                currentUser = user;
+                users.push(user);
+                document.getElementById('currentUserId').innerHTML = currentUser.userId;
+                document.getElementById('point').innerHTML = currentUser.point;
+            } else { // user found
+                // found user - > set currentUser
+            }
+            console.log(users);
+
+        }
+    }
+
+    const includeHTML = (id, fileName) => {
+        fetch(fileName)
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById(id).innerHTML = text;
+                Array.from(document.querySelectorAll('#' + id + ' script')).forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes)
+                        .forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
+            })
+            .catch(error => console.log(error));
+    }
+
+    const showExerciseButton = () => {
+        const startButton = document.getElementById('startButton');
+        startButton.classList.remove('hide');
+        startButton.classList.add('show');
+    };
+
+    const exerciseButton = () => {
+        let userConfirm = confirm("운동을 시작하시겠습니까?");
+
+        if (userConfirm) {
+            document.getElementById('Information').classList.add('hide');
+            document.getElementById('mainContainer').classList.add('show');
+            document.getElementById('exerciseVideo').classList.add('show');
+        } else {
+            alert("운동을 시작하지 않습니다.");
+            document.getElementById('exerciseVideo').classList.remove('show');
+            document.getElementById('exerciseVideo').classList.add('hide');
+
+
+        }
+
+    };
+
+</script>
+</body>
+</html>

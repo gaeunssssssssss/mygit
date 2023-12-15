@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 경쟁 게임</title>
+
+</head>
+<body>
+
+    <h1>운동 경쟁 게임</h1>
+
+    <div>
+        <label for="playerNum1">1세트 수행횟수 입력: </label>
+        <input type="number" id="playerNum1">
+        <button onclick="playGame(1)">입력</button>
+        <div id="result1"></div>
+    </div>
+    <br>
+
+    <div>
+        <label for="playerNum2">2세트 수행횟수 입력: </label>
+        <input type="number" id="playerNum2">
+        <button onclick="playGame(2)">입력</button>
+        <div id="result2"></div>
+    </div>
+    <br>
+
+    <div>
+        <label for="playerNum3">3세트 수행횟수 입력: </label>
+        <input type="number" id="playerNum3">
+        <button onclick="playGame(3)">입력</button>
+        <div id="result3"></div>
+    </div>
+    <br>
+
+    <div id="finalResult"></div>
+
+    <script>
+        var playerScore=0;
+        var compScore=0;
+
+        function playGame(round) {
+            var strNum = document.getElementById("playerNum" + round).value;
+            var playerNum = parseInt(strNum)
+            var computerNumber = Math.floor(Math.random() * 7) + 12;
+            var resultElement = document.getElementById("result" + round);
+            
+
+            if (playerNum > computerNumber) {
+                resultElement.innerHTML = "라운드 " + round + ": 승리했다!";
+                playerScore += 1;
+            } else {
+                resultElement.innerHTML = "라운드 " + round + ": 패배했다!";
+                compScore += 1;
+            }
+            
+            if (round == 3){
+                var finalResultText = document.getElementById("finalResult");
+                if (playerScore > compScore){
+                    finalResultText.innerHTML = "결과: 플레이어가 승리했습니다! 3판중 " + playerScore + "판 승리!!"
+                }
+                else {
+                    finalResultText.innerHTML = "결과: 플레이어가 패배했습니다! 3판중 " + compScore + "판 패배!!"
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

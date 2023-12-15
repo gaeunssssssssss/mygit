@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 식단</title>
+    <style>
+        #bulkbtn { display: none; }
+        #bulkbtn:checked ~ .menbulk { display: block; } 
+        .menbulk { display: none; }
+
+        #dietbtn { display: none; }
+        #dietbtn:checked ~ .womendiet { display: block; } 
+        .womendiet { display: none; }
+
+        #title {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+        #heading {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        #small {
+            font-size: 12px;
+            font-style: italic;
+        }
+        #smalltitle{
+            font-size: 18px;
+            font-style: bold;
+        }
+        img.food {
+            width: 12%;
+            height: auto;
+        }
+        img.pic {
+            width : 12%;
+            height: auto;
+        }
+    </style>
+    
+</head>
+<body>
+    <h1 id="title">운동 식단</h1>
+    <br><br>
+    <img alt="식단" src="./img/식단.jpg" class="pic" />
+    
+    <div id="smalltitle">식단 구성</div>
+
+    <input id="bulkbtn" type="checkbox" />
+    <button onclick="togBuMenu()">체력증진</button>
+    <input id="dietbtn" type="checkbox" />
+    <button onclick="togDiMenu()">다이어트</button>
+
+    <ol class="menbulk">
+        <div id="heading">남성 체력증진 식단</div>
+        <div id="small">70kg 남성 기준</div> <br>
+        <li>아침</li>
+            <ul>
+                <li id="Mmenubreakfast1">잡곡밥 100g, 계란 2개, 사과 1/2개</li>
+                <li id="Mmenubreakfast2" style="display: none;">현미밥 200g, 닭가슴살 100g, 계란 2개, 브로콜리</li>
+                <li id="Mmenubreakfast3" style="display: none;">감자 100g, 닭가슴살 스테이크 100g, 아스파라거스</li>
+            </ul>
+        <li>점심</li>
+            <ul>
+                <li id="Mmenulunch1">잡곡밥 200g, 닭가슴살 100g, 야채 50g</li>
+                <li id="Mmenulunch2" style="display: none;">현미밥 200g, 돼지고기 200g, 야채 50g</li>
+                <li id="Mmenulunch3" style="display: none;">감자 100g, 닭가슴살 100g, 야채 50g</li>
+            </ul>
+        <li>저녁</li>
+            <ul>
+                <li id="Mmenudinner1">감자 150g, 닭가슴살 100g, 계란 2개, 야채 50g
+                    <br><br>
+                    <img alt="잡곡밥" src="./img/잡곡밥.jpg" class="food" /> 
+                    <img alt="닭가슴살" src="./img/닭가슴살.jpg" class="food" />
+                    <img alt="사과" src="./img/사과.jpg" class="food" />
+                </li>
+                <li id="Mmenudinner2" style="display: none;">고구마 100g, 고등어 100g, 야채 50g
+                    <br><br>
+                    <img alt="고구마" src="./img/고구마.jpg" class="food" />
+                    <img alt="돼지고기" src="./img/돼지고기.jpg" class="food" />
+                    <img alt="브로콜리" src="./img/브로콜리.jpg" class="food" />
+                </li>
+                <li id="Mmenudinner3" style="display: none;">고구마 100g, 고등어 100g, 야채 50g
+                    <br><br>
+                    <img alt="감자" src="./img/감자.jpg" class="food" /> 
+                    <img alt="고등어" src="./img/고등어.jpg" class="food" />
+                    <img alt="아스파라거스" src="./img/아스파라거스.jpg" class="food" />
+                </li>
+            </ul>
+        
+    </ol>
+    
+
+    <ol class="womendiet">
+        <div id="heading">여성 다이어트 식단</div>
+        <div id="small">55kg 여성 기준</div> <br>
+        <li>아침</li>
+            <ul>
+                <li id="Wmenubreakfast1">통밀빵 100g, 계란 2개, 과일 소량</li>
+                <li id="Wmenubreakfast2" style="display: none;">바나나 1개, 계란 2개, 오렌지 2개</li>
+                <li id="Wmenubreakfast3" style="display: none;">단호박 150g, 그릭요거트 100g, 닭가슴살 100g, 김치</li>
+            </ul>
+        <li>점심</li>
+            <ul>
+                <li id="Wmenulunch1">통밀빵 100g, 닭가슴살 100g, 야채</li>
+                <li id="Wmenulunch2" style="display: none;">오트밀 100g, 닭가슴살 100g, 야채</li>
+                <li id="Wmenulunch3" style="display: none;">흰쌀밥 100g, 계란 2개, 샐러드, 하루견과</li>
+            </ul>
+        <li>저녁</li>
+            <ul>
+                <li id="Wmenudinner1">흰쌀밥 100g, 닭가슴살 100g, 야채
+                    <br><br>
+                    <img alt="통밀빵" src="./img/통밀빵.jpg" class="food" />
+                    <img alt="계란" src="./img/계란.jpg" class="food" />
+                </li>
+                <li id="Wmenudinner2" style="display: none;">오트밀 100g, 두부 1/2모, 야채
+                    <br><br>
+                    <img alt="바나나" src="./img/바나나.jpg" class="food" /> 
+                    <img alt="오트밀" src="./img/오트밀.jpg" class="food" />
+                </li>
+                <li id="Wmenudinner3" style="display: none;">흰쌀밥 100g, 생선류 100g, 야채
+                    <br><br>
+                    <img alt="그릭요거트" src="./img/그릭요거트.jpg" class="food" />
+                    <img alt="하루견과" src="./img/하루견과.jpg" class="food" />
+                </li>
+            </ul>
+    </ol>
+
+    <br><br><br><br>
+    <div>
+        *하루 단백질 양은 (몸무게 * 1.2)g만큼 권장합니다!<br>
+        *본인 몸무게에 따라 식단을 적절히 바꿔보세요! <br><br><br>
+    </div>
+    <div id="smalltitle">칼로리 표(100g 기준)<br><br></div>
+    <div></div>
+        탄수화물 식품 : 고구마 128kcal, 현미 153kcal, 단호박 66kcal, 오트밀(귀리)372kcal, 통밀빵 290kcal, 미숫가루 30kcal(한 스푼=8g)<br>
+        단백질 식품 : 닭가슴살 109kcal, 계란흰자 15kcal(계란 한 개는 70kcal), 두부 84kcal(한 모는 420kcal), 고등어 183kcal, 돼지고기(안심) 220kcal, 연어 161kcal<br>
+        기타 식품들 : 플레인요거트 60kcal <br><br>
+        *견과류나 과일, 채소 등은 칼로리 신경 쓰지 마시고 드셔도 됩니다!
+    </div>
+
+    <script>
+        function togBuMenu() {
+            var checkbox = document.getElementById("bulkbtn");
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                var randomNum = Math.floor(Math.random() * 3) + 1;
+
+                document.getElementById("Mmenubreakfast" + randomNum).style.display = "block";
+                document.getElementById("Mmenulunch" + randomNum).style.display = "block";
+                document.getElementById("Mmenudinner" + randomNum).style.display = "block";
+
+                for (i = 1; i <= 3; i++) {
+                    if (i !== randomNum) {
+                        document.getElementById("Mmenubreakfast" + i).style.display = "none";
+                        document.getElementById("Mmenulunch" + i).style.display = "none";
+                        document.getElementById("Mmenudinner" + i).style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function togDiMenu() {
+            var checkbox = document.getElementById("dietbtn");
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                var randomNum = Math.floor(Math.random() * 3) + 1;
+
+                document.getElementById("Wmenubreakfast" + randomNum).style.display = "block";
+                document.getElementById("Wmenulunch" + randomNum).style.display = "block";
+                document.getElementById("Wmenudinner" + randomNum).style.display = "block";
+
+                for (i = 1; i <= 3; i++) {
+                    if (i !== randomNum) {
+                        document.getElementById("Wmenubreakfast" + i).style.display = "none";
+                        document.getElementById("Wmenulunch" + i).style.display = "none";
+                        document.getElementById("Wmenudinner" + i).style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
